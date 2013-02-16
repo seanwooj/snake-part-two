@@ -1,0 +1,34 @@
+.snake {
+  border: 1px solid black;
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  background: url('img/bg2.png');
+}
+
+.grid {
+  margin: 1px;
+  height: 23px;
+  width: 23px;
+  float: left;
+}
+
+.snake-head {
+  background: black;
+}
+
+.snake-body {
+  background: green;
+}
+
+.apple {
+  background: red;
+}
+
+.container {
+  text-align: center;
+}
+
+body {
+  background: url('img/bg.png');
+}
