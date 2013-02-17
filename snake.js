@@ -29,6 +29,24 @@ function makeSnakeGame() {
     createApple: function() {
       // array is double wrapped in order to allow contains coordinate to work
       this.apple = [[Math.floor((Math.random() * 20)), Math.floor((Math.random() * 20))]]
+    },
+
+    gottenApple: function() {
+      if ( this.containsCoordinates([this.apple], this.snake.body[0])) {
+        this.createApple();
+        return true;
+      }
+    },
+
+    isDead: function() {
+      if ( this.containsCoordinates(_.rest(this.snake.body), this.snake.body[0])) {
+        alert("you are dead.");
+        return true;
+      } else if ( this.snake.body[0][0] < 0 || this.snake.body [0][0] >= 20 ) {
+        return true;
+      } else if ( this.snake.body[0][1] < 0 || this.snake.body [0][1] >= 20 ) {
+        return true;
+      }
     }
   }
 }
@@ -53,9 +71,11 @@ function makeBoard() {
 function makeSnake(){
   return {
     body: undefined,
+    game: undefined,
 
-    init: function() {
+    init: function(game) {
       this.body= [ [10, 10], [10, 9], [10, 8], [10, 7], [10, 6] ] // right
+      this.game = game;
       // this.body= [ [10, 6], [10, 7], [10, 8], [10, 9], [10, 10] ] // left
       // this.body= [ [10, 10], [9, 10], [8, 10], [7, 10], [6, 10] ] // down
       // this.body= [ [6, 10], [7, 10], [8, 10], [9, 10], [10, 10] ] // down
@@ -106,7 +126,12 @@ function makeSnake(){
           this.body.unshift([head[0] - 1, head[1]]);
           break;
       }
-      this.body.pop();
+      if (!(game.gottenApple())){
+        this.body.pop();
+      } else {
+        // do nothing
+        console.log(this.body);
+      }
     },
 
     turn: function(desiredDirection) {

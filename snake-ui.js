@@ -31,9 +31,11 @@ $('html').keydown(function (event) {
 });
 
 function runLoop() {
-  window.setTimeout(runLoop, GAME_LOOP);
-  game.snake.stepCycle();
-  updateBoardUI();
+  if( !(game.isDead())) {
+    window.setTimeout(runLoop, GAME_LOOP);
+    game.snake.stepCycle();
+    updateBoardUI();
+  }
 }
 
 
@@ -56,14 +58,15 @@ function updateBoardUI() {
     for(col = 0; col < game.board.board[0].length; col++ ) {
       if ( game.containsCoordinates(game.snake.body, [row, col])){
         $('.r'+row+'c'+col)
-          .addClass('snake-body');
+          .addClass('snake-body')
+          .removeClass('apple')
       } else if ( game.containsCoordinates(game.apple, [row, col])) {
         $('.r'+row+'c'+col)
           .addClass('apple');
       } else {
         $('.r'+row+'c'+col)
           .removeClass('snake-body')
-          .removeClass('food')
+          .removeClass('apple')
       }
     }
   }
